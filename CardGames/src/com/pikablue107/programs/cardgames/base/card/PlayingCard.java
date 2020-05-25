@@ -3,6 +3,7 @@
  */
 package com.pikablue107.programs.cardgames.base.card;
 
+import com.pikablue107.programs.cardgames.base.card.Card.Visibility;
 import com.pikablue107.programs.cardgames.base.player.Player;
 
 /**
@@ -19,8 +20,51 @@ public class PlayingCard extends Card {
 	/** The Rank of this PlayingCard. */
 	private Rank rank;
 
-	
-	
+	/**
+	 * Creates a PlayingCard with no owner, a visibility of None, and the specified
+	 * Suit and Rank.
+	 * 
+	 * @param visibility
+	 * @param owner
+	 */
+	public PlayingCard(Suit suit, Rank rank) {
+		this(Visibility.NONE, null, suit, rank);
+	}
+
+	/**
+	 * Creates a PlayingCard with a null owner and the specified Visibility, Suit,
+	 * and Rank.
+	 * 
+	 * @param visibility
+	 * @param owner
+	 */
+	public PlayingCard(Visibility visibility, Suit suit, Rank rank) {
+		this(visibility, null, suit, rank);
+	}
+
+	/**
+	 * Creates a PlayingCard with Owner visibility, the specified Player, Suit, and
+	 * Rank.
+	 * 
+	 * @param visibility
+	 * @param owner
+	 */
+	public PlayingCard(Player owner, Suit suit, Rank rank) {
+		this(Visibility.OWNER, owner, suit, rank);
+	}
+
+	/**
+	 * Creates a PlayingCard with the specified Player, Visibility, Suit, and Rank.
+	 * 
+	 * @param visibility
+	 * @param owner
+	 */
+	public PlayingCard(Visibility visibility, Player owner, Suit suit, Rank rank) {
+		super(visibility, owner);
+		setSuit(suit);
+		setRank(rank);
+	}
+
 	/**
 	 * Retrieves the suit of this PlayingCard.
 	 * 
