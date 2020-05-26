@@ -3,7 +3,6 @@
  */
 package com.pikablue107.programs.cardgames.base.card;
 
-import com.pikablue107.programs.cardgames.base.card.Card.Visibility;
 import com.pikablue107.programs.cardgames.base.player.Player;
 
 /**
@@ -19,6 +18,8 @@ public class PlayingCard extends Card {
 	private Suit suit;
 	/** The Rank of this PlayingCard. */
 	private Rank rank;
+	/** The Color of this PlayingCard. */
+	private Color color;
 
 	/**
 	 * Creates a PlayingCard with no owner, a visibility of None, and the specified
@@ -80,7 +81,53 @@ public class PlayingCard extends Card {
 	 * @param suit the suit to set
 	 */
 	private void setSuit(Suit suit) {
+		if (suit == null)
+			throw new IllegalArgumentException("Suit cannot be null");
 		this.suit = suit;
+		switch (suit) {
+		case DIAMONDS:
+		case HEARTS:
+		case JRED:
+			this.color = Color.RED;
+			break;
+		case CLUBS:
+		case SPADES:
+		case JBLACK:
+			this.color = Color.BLACK;
+			break;
+		default:
+			throw new IllegalArgumentException("Unrecognized Suit: " + suit.toString());
+		}
+	}
+
+	/**
+	 * @return the color
+	 */
+	public Color getColor(Player suspect) {
+		checkPermission(suspect);
+		return this.color;
+	}
+
+	/**
+	 * Determines if this card is red.
+	 * 
+	 * @param suspect the Player attempting to view details of the card.
+	 * @return true if red
+	 */
+	public boolean isRed(Player suspect) {
+		checkPermission(suspect);
+		return this.color.equals(Color.RED);
+	}
+
+	/**
+	 * Determines if this card is black.
+	 * 
+	 * @param suspect the Player attempting to view details of the card.
+	 * @return true if black
+	 */
+	public boolean isBlack(Player suspect) {
+		checkPermission(suspect);
+		return this.color.equals(Color.BLACK);
 	}
 
 	/**
@@ -141,12 +188,20 @@ public class PlayingCard extends Card {
 	}
 
 	/**
-	 * Common Suit of a card. Can be DIamonds Clubs, Hearts, or Spades.
+	 * Common Suit of a card. Can be Diamonds Clubs, Hearts, Spades, Joker-Red, or
+	 * Joker-Black
 	 * 
 	 * @author Melody Griesen
 	 *
 	 */
 	public enum Suit {
-		DIAMONDS, CLUBS, HEARTS, SPADES
+		DIAMONDS, CLUBS, HEARTS, SPADES, JRED, JBLACK
+	}
+
+	/**
+	 * Color of a card. Can be Red or Black.
+	 */
+	public enum Color {
+		RED, BLACK
 	}
 }
